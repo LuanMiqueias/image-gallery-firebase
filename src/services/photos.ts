@@ -1,6 +1,6 @@
 import { storage } from "../libs/firebase";
 import { IPhoto } from "../types/photos";
-import { ref, listAll, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { ref, listAll, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import { v4 } from 'uuid';
 export const getAll = async () => {
   const imagensFolder = ref(storage, 'images'); // Entra dentro da pasta chamada 'images'
@@ -29,5 +29,16 @@ export const insert = async (file: File) => {
   }
   else {
     return new Error('Tipo de arquivo não permitido')
+  }
+}
+
+export const deletePhoto = async (name: string) => {
+  const image = ref(storage, `images/${name}`);
+  try {
+    await deleteObject(image);
+    return name;
+  } catch (error) {
+    console.error(error)
+    return error
   }
 }

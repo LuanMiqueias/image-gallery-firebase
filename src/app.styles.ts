@@ -95,6 +95,14 @@ export const UploadPhoto = styled.form`
 		font-weight: 700;
 		cursor: pointer;
     transition: all .2s;
+    &:disabled{
+      opacity: .2;
+      cursor: not-allowed;
+      &:hover{
+			  background: transparent;
+			  color: #fff;
+      }
+    }
 		&:hover {
       transition: all .1s;
 			background: #fff;

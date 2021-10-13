@@ -40,6 +40,9 @@ const App = () => {
 
     }
   }
+  function changePhotos(newPhotosList: IPhoto[]) {
+    setPhotos(newPhotosList)
+  }
   return (
     <C.Container>
       <C.Area>
@@ -48,7 +51,7 @@ const App = () => {
           <label htmlFor="image">
             <input type="file" name="image" id="image" />
           </label>
-          <button type="submit">
+          <button type="submit" disabled={uploading}>
             {uploading ? <Loading /> : 'Enviar'}
           </button>
         </C.UploadPhoto>
@@ -63,7 +66,7 @@ const App = () => {
             {!loading && photos.length &&
 
               photos.map((item) => {
-                return <PhotoItem name={item.name} url={item.url} key={item.name} />
+                return <PhotoItem name={item.name} url={item.url} key={item.name} photos={photos} changePhotos={changePhotos} />
               })
             }
           </div>
