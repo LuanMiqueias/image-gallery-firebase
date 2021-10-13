@@ -13,10 +13,12 @@ interface IProps {
 const PhotoItem: React.FC<IProps> = ({ name, url, photos, changePhotos }) => {
   console.log(name)
   const [loading, setLoading] = React.useState(false);
+  const [updating, setUpdating] = React.useState(false);
   React.useEffect(() => {
     setLoading(true);
   }, [])
   async function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, name: string) {
+    setUpdating(true);
     e.preventDefault();
     const result = await deletePhoto(name);
     if (!result) {
@@ -27,21 +29,25 @@ const PhotoItem: React.FC<IProps> = ({ name, url, photos, changePhotos }) => {
       })
       changePhotos(newPhotosList)
     }
+    setUpdating(false);
   }
   return (
     <P.Photo>
-      <div className="image">
-        {loading && <div className="loading-container">
-          <Loading />
-        </div>
-        }
+      {updating ?
+        <Loading />
+        : <>
+          <div className="image">
+            {loading && <div className="loading-container">
+              <Loading />
+            </div>
+            }
 
-        <img src={url} onLoad={() => setLoading(false)} className={!loading ? 'show' : ''} />
-      </div>
-      <p>{name}</p>
-      <div className="delete">
-        <button onClick={(e) => handleClick(e, name)}>Delete</button>
-      </div>
+            <img src={url} onLoad={() => setLoading(false)} className={!loading ? 'show' : ''} />
+          </div>
+          <p>{name}</p>
+          <div className="delete">
+            <button onClick={(e) => handleClick(e, name)}>Delete</button>
+          </div></>}
     </P.Photo>
   )
 }

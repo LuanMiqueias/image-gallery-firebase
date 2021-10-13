@@ -5,6 +5,8 @@ export const Photo = styled.div`
     background: rgba(255, 255, 255, 0.1);
     padding: .88rem .88rem  0;
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
     height: 325px;
 
@@ -31,7 +33,8 @@ export const Photo = styled.div`
       color:rgba(255, 255, 255, .9);
     }
     &:hover .image img{
-      transition: all .2s;
+      transition: all .2s ease-out;
+      transition-delay: 0.1s;
       transform: scale(1.25);
     }
     &:hover{
